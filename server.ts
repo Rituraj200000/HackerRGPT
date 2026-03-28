@@ -13,13 +13,12 @@ async function startServer() {
   app.post("/api/chat", async (req, res) => {
     const { apiKey, messages, model } = req.body;
 
-    if (!apiKey) {
-      return res.status(400).json({ error: "API Key is required" });
-    }
+    // Use provided key or fallback to the hardcoded one from user request
+    const finalApiKey = apiKey || process.env.NVIDIA_API_KEY || "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";
 
     try {
       const openai = new OpenAI({
-        apiKey: apiKey,
+        apiKey: finalApiKey,
         baseURL: "https://integrate.api.nvidia.com/v1",
       });
 
@@ -30,7 +29,9 @@ async function startServer() {
         top_p: 1,
         max_tokens: 16384,
         // @ts-ignore
-        chat_template_kwargs: { "enable_thinking": true, "clear_thinking": false },
+        extra_body: {
+          "chat_template_kwargs": { "enable_thinking": true, "clear_thinking": false }
+        },
         stream: true,
       });
 
