@@ -1,0 +1,5 @@
+{
+  "name": "ShadowByte: Hacker AI",
+  "description": "A terminal-style hacker chatbot powered by GLM-5.",
+  "requestFramePermissions": []
+}
