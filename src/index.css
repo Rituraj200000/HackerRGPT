@@ -9,16 +9,21 @@
   --color-hacker-bg: #0a0a0a;
   --color-hacker-border: #1a1a1a;
   --color-hacker-accent: #008f11;
+  --color-horror-red: #8b0000;
 }
 
 @layer base {
   body {
-    @apply bg-hacker-bg text-hacker-green font-mono selection:bg-hacker-green selection:text-hacker-bg;
+    @apply bg-hacker-bg text-hacker-green font-mono selection:bg-hacker-green selection:text-hacker-bg overflow-hidden;
   }
 }
 
 .terminal-glow {
   text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+}
+
+.horror-glow {
+  text-shadow: 0 0 10px rgba(139, 0, 0, 0.8), 0 0 20px rgba(139, 0, 0, 0.4);
 }
 
 .scanline {
@@ -35,6 +40,45 @@
 @keyframes scanline {
   0% { bottom: 100%; }
   100% { bottom: -100px; }
+}
+
+.glitch-text {
+  animation: glitch 1s linear infinite;
+}
+
+@keyframes glitch {
+  2%, 64% { transform: translate(2px, 0) skew(0deg); }
+  4%, 60% { transform: translate(-2px, 0) skew(0deg); }
+  62% { transform: translate(0, 0) skew(5deg); }
+}
+
+.skull-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.blood-drip {
+  position: relative;
+}
+
+.blood-drip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 2px;
+  height: 0;
+  background: var(--color-horror-red);
+  animation: drip 2s ease-in infinite;
+}
+
+@keyframes drip {
+  0% { height: 0; opacity: 1; }
+  100% { height: 20px; opacity: 0; }
 }
 
 .markdown-body pre {
